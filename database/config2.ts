@@ -4,7 +4,7 @@ import { Sequelize } from 'sequelize';
 import path from 'path';
 import fs from 'fs';
 
-const dbPath = path.resolve(__dirname, 'data.db'); // Ensure this path is correct
+const dbPath = path.resolve(__dirname, 'data.sqlite3'); // Ensure this path is correct
 
 // Ensure the database file exists
 if (!fs.existsSync(dbPath)) {

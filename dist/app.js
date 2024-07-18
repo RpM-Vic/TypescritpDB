@@ -9,10 +9,4 @@ const server_1 = __importDefault(require("./models/server"));
 dotenv_1.default.config();
 const server = new server_1.default();
 server.listen();
-// Handle server shutdown gracefully
-/* process.on('SIGINT', () => {
-    console.log('Shutting down server...');
-    server.close();
-    process.exit(0);
-}); */
 //# sourceMappingURL=app.js.map

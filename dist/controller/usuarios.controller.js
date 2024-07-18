@@ -16,21 +16,21 @@ exports.deleteUsuario = exports.putUsuario = exports.postUsuario = exports.getUs
 //user.controller.ts
 const usuario_1 = __importDefault(require("../models/usuario"));
 const getUsuarios = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const usuarios = yield usuario_1.default.findAll();
-        console.log("usuarios:", usuarios);
+    usuario_1.default.findAll()
+        .then(data => {
+        console.log("data:", data);
         res.status(200).json({
             message: "get usuarios",
-            usuarios
+            data
         });
-    }
-    catch (err) {
+    })
+        .catch((err) => {
         console.error('Error fetching usuarios:', err);
         res.status(500).json({
             message: "Error fetching usuarios",
             error: err instanceof Error ? err.message : 'Unknown error'
         });
-    }
+    });
 });
 exports.getUsuarios = getUsuarios;
 const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

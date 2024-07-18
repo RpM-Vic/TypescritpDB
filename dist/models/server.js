@@ -1,5 +1,4 @@
 "use strict";
-//server.ts
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -13,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+//server.ts
 const express_1 = __importDefault(require("express"));
-const usuarios_routes_1 = __importDefault(require("../routes/usuarios.routes")); //import * as userRoutes from... If I had more things to import from that origin
+const usuarios_routes_1 = __importDefault(require("../routes/usuarios.routes"));
 const cors_1 = __importDefault(require("cors"));
-//import {closeDb} from '../database/config'
 const config2_1 = __importDefault(require("../database/config2"));
 class Server {
     constructor() {
@@ -53,8 +52,24 @@ class Server {
         });
     }
     listen() {
-        this.app.listen(this.port, () => {
+        const server = this.app.listen(this.port, () => {
             console.log(`Server is running on port ${this.port}`);
+        });
+        process.on('SIGINT', this.close.bind(this));
+        process.on('SIGTERM', this.close.bind(this));
+        return server;
+    }
+    close() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield config2_1.default.close();
+                console.log('Database connection closed.');
+                process.exit(0);
+            }
+            catch (err) {
+                console.error('Error closing database connection:', err);
+                process.exit(1);
+            }
         });
     }
 }

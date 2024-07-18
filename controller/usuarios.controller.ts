@@ -6,24 +6,23 @@ import Usuario  from "../models/usuario";
 import { Request, Response } from "express";
 
 export const getUsuarios = async (req: Request, res: Response) => {
-    try {
-        const usuarios = await Usuario.findAll();
-        console.log("usuarios:", usuarios);
+
+    Usuario.findAll()
+    .then(data=>{
+        console.log("data:", data)
         res.status(200).json({
             message: "get usuarios",
-            usuarios
+            data
         });
-    } catch (err) {
+    })
+    .catch((err) =>{
         console.error('Error fetching usuarios:', err);
         res.status(500).json({
             message: "Error fetching usuarios",
             error: err instanceof Error ? err.message : 'Unknown error'
         });
-    }
-};
-
-
-
+    })
+}
 
 export const getUsuario = async (req: Request, res: Response) => {
     const { nombre } = req.params;
